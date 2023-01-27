@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: mediawiki-rc
+spec:
+  replicas: 3
+  selector:
+    app: mediawiki
+  template:
+    metadata:
+      labels:
+        app: mediawiki
+    spec:
+      containers:
+      - name: mediawiki
+        image: mediawiki:latest
+        resources:
+          limits:
+            memory: "400Mi"
+        volumeMounts:
+        - name: sample-csv
+          mountPath: /data
+      - name: POD B
+        image: mediawiki:latest
+        resources:
+          limits:
+            memory: "200Mi"
+        volumeMounts:
+        - name: sample-csv
+          mountPath: /data
+      - name: POD C
+        image: mediawiki:latest
+        resources:
+          limits:
+            memory: "400Mi"
+        volumeMounts:
+        - name: sample-csv
+          mountPath: /data
+      volumes:
+      - name: sample-csv
+        configMap:
+          name: sample-csv
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sample-csv
+data:
+  sample.csv: |
+    Column1, Column2
+    Row1, Value1
+    Row2, Value2

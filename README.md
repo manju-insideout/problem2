@@ -1,0 +1,1 @@
+ReplicationController creates 3 replicas Pods named "POD A", "POD B", and "POD C"  of the mediawiki Pod, with each Pod having a specified memory limit. The Pods also have a volume mount to a ConfigMap named "sample-csv" which contains the sample CSV file. This allows the Pods to access the file at the path '/data/sample.csv'.
